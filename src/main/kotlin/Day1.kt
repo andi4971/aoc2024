@@ -10,14 +10,11 @@ fun main() {
         listA += entry.first().toInt()
         listB += entry.last().toInt()
     }
-    listA.sort()
-    listB.sort()
 
     var sum = 0
     while(listA.isNotEmpty()) {
-        val a = listA.removeAt(0)
-        val b = listB.removeAt(0)
-        sum += abs(a - b)
+        val a = listA.removeFirst()
+        listB.count { it == a }.let { sum += it * a }
     }
     println(sum)
 
