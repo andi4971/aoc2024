@@ -9,21 +9,21 @@ fun main() {
     for (row in arr.indices) {
         for (col in arr[0].indices) {
             val curr = arr[row][col]
-            if(curr != 'X') continue
+            if (curr != 'A') continue
 
+            val str1 = arr.getOrNull(row - 1)?.getOrNull(col - 1)?.let { topLeft ->
+                var currString = topLeft + "A"
+                arr.getOrNull(row + 1)?.getOrNull(col + 1)?.let { currString + it }
+            }
 
+            val str2 = arr.getOrNull(row - 1)?.getOrNull(col+1)?.let { topRight ->
+                var currString = topRight + "A"
+                arr.getOrNull(row + 1)?.getOrNull(col - 1)?.let { currString + it }
+            }
 
-            val strings = listOf(
-                getEastString(row, col, arr),
-                getSouthEastString(row, col, arr),
-                getSouthString(row, col, arr),
-                getSouthWestString(row, col, arr),
-                getWestString(row, col, arr),
-                getNorthWestString(row, col, arr),
-                getNorthString(row, col, arr),
-                getNorthEastString(row, col, arr)
-            )
-            strings.count { it == "XMAS" }.let { count += it }
+            if ((str1 == "MAS" || str1 == "SAM") && (str2 == "MAS" || str2 == "SAM")) {
+                count++
+            }
         }
     }
     println(count)
@@ -31,8 +31,8 @@ fun main() {
 
 fun getEastString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    for(currCol in col until col+4) {
-        if(currCol >= arr[0].size) break
+    for (currCol in col until col + 4) {
+        if (currCol >= arr[0].size) break
         currString += arr[row][currCol]
     }
     return currString
@@ -40,9 +40,9 @@ fun getEastString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getSouthEastString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    var currRow  = row
-    for(currCol in col until col+4) {
-        if(currCol >= arr[0].size || currRow > arr.lastIndex) break
+    var currRow = row
+    for (currCol in col until col + 4) {
+        if (currCol >= arr[0].size || currRow > arr.lastIndex) break
         currString += arr[currRow][currCol]
         currRow++
     }
@@ -51,8 +51,8 @@ fun getSouthEastString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getSouthString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    for(currRow in row until row+4) {
-        if(currRow > arr.lastIndex) break
+    for (currRow in row until row + 4) {
+        if (currRow > arr.lastIndex) break
         currString += arr[currRow][col]
     }
     return currString
@@ -60,9 +60,9 @@ fun getSouthString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getSouthWestString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    var currRow  = row
-    for(currCol in col downTo col-3) {
-        if(currCol < 0 || currRow > arr.lastIndex) break
+    var currRow = row
+    for (currCol in col downTo col - 3) {
+        if (currCol < 0 || currRow > arr.lastIndex) break
         currString += arr[currRow][currCol]
         currRow++
     }
@@ -71,8 +71,8 @@ fun getSouthWestString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getWestString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    for(currCol in col downTo col-3) {
-        if(currCol < 0) break
+    for (currCol in col downTo col - 3) {
+        if (currCol < 0) break
         currString += arr[row][currCol]
     }
     return currString
@@ -80,9 +80,9 @@ fun getWestString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getNorthWestString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    var currRow  = row
-    for(currCol in col downTo col-3) {
-        if(currCol < 0 || currRow < 0) break
+    var currRow = row
+    for (currCol in col downTo col - 3) {
+        if (currCol < 0 || currRow < 0) break
         currString += arr[currRow][currCol]
         currRow--
     }
@@ -91,8 +91,8 @@ fun getNorthWestString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getNorthString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    for(currRow in row downTo row-3) {
-        if(currRow < 0) break
+    for (currRow in row downTo row - 3) {
+        if (currRow < 0) break
         currString += arr[currRow][col]
     }
     return currString
@@ -100,9 +100,9 @@ fun getNorthString(row: Int, col: Int, arr: Array<CharArray>): String {
 
 fun getNorthEastString(row: Int, col: Int, arr: Array<CharArray>): String {
     var currString = ""
-    var currRow  = row
-    for(currCol in col until col+4) {
-        if(currCol >= arr[0].size || currRow < 0) break
+    var currRow = row
+    for (currCol in col until col + 4) {
+        if (currCol >= arr[0].size || currRow < 0) break
         currString += arr[currRow][currCol]
         currRow--
     }
